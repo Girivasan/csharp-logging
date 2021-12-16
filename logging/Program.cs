@@ -9,7 +9,9 @@ public class Program
     {
         MicrosoftLoggingExtension();
         Serilog();
-        Nlog();
+        // Only of the following needs to be Commented and Uncommented for checking the configuration
+        //Nlog();
+        NlogWithConfigFile();
     }
 
     static void MicrosoftLoggingExtension()
@@ -45,7 +47,7 @@ public class Program
                                 .WriteTo.Console()
                                 // add debug output as logging target
                                 .WriteTo.Debug()
-                                .WriteTo.File("log_serilog.txt", outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+                                .WriteTo.File("logs/log_serilog.txt", outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
                                 // set minimum level to log
                                 .MinimumLevel.Debug()
                                 .CreateLogger();
@@ -69,7 +71,7 @@ public class Program
         // create a debug output logging target
         var logDebug = new NLog.Targets.OutputDebugStringTarget();
         // create a file output logging target
-        var logFile = new NLog.Targets.FileTarget("logFile") { FileName = "log_nlog.txt" };
+        var logFile = new NLog.Targets.FileTarget("logFile") { FileName = "logs/log_nlog.txt" };
 
         // send logs with levels from Info to Fatal to the console
         config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logConsole);
@@ -91,5 +93,24 @@ public class Program
         logger.Warn("NLog Warning message");
         logger.Error("NLog Error message");
         logger.Fatal("NLog Fatal message");
+    }
+
+    static void NlogWithConfigFile()
+    {
+        var logger = NLog.LogManager.GetCurrentClassLogger();
+        try
+        {
+            // logging
+            logger.Trace("NLog Config Trace message");
+            logger.Debug("NLog Config Debug message");
+            logger.Info("NLog Config Info message");
+            logger.Warn("NLog Config Warning message");
+            logger.Error("NLog Config Error message");
+            logger.Fatal("NLog Config Fatal message");
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, "Goodbye cruel world");
+        }
     }
 }
