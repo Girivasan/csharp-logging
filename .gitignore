@@ -4,3 +4,4 @@
 # Debug and Release folders in bin
 logging/bin/Debug/
 logging/bin/Release/
+logging/obj/
