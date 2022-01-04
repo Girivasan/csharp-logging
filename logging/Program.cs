@@ -9,7 +9,7 @@ public class Program
     {
         MicrosoftLoggingExtension();
         Serilog();
-        // Only of the following needs to be Commented and Uncommented for checking the configuration
+        // Only one of the following needs to be Commented and Uncommented for checking the configuration
         //Nlog();
         NlogWithConfigFile();
     }
